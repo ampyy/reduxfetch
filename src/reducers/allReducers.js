@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import postReducer from "./fetchReducer";
 
 const allReducers = combineReducers({
-  data: postReducer,
+  user: postReducer,
 });
 
 export default allReducers;

@@ -1,25 +1,27 @@
+import { FETCH_POST_START, FETCH_POST_SUCCESS, FETCH_POST_FAIL } from "../actions";
+
 const initialState = {
     posts: [],
-    loading: true,
-    error: null,
+    loading: false,
+    error: "",
   };
   
   const postReducer = (state = initialState, action) => {
     switch (action.type) {
-      case "FETCH_POST_START":
+      case FETCH_POST_START:
         return {
           ...state,
           loading: true,
         };
-      case "FETCH_POST_SUCCESS":
+      case FETCH_POST_SUCCESS:
         return {
-          ...state,
           loading: false,
           posts: action.payload,
+          error: ''
         };
-      case "FETCH_POST_FAIL":
+      case FETCH_POST_FAIL:
         return {
-          ...state,
+          posts: [], 
           loading: false,
           error: action.payload,
         };

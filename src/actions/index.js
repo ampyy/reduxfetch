@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const FETCH_POST_START = "FETCH_POST_START";
-const FETCH_POST_SUCCESS = "FETCH_POST_SUCCESS";
-const FETCH_POST_FAIL = "FETCH_POST_FAIL";
+export const FETCH_POST_START = "FETCH_POST_START";
+export const FETCH_POST_SUCCESS = "FETCH_POST_SUCCESS";
+export const FETCH_POST_FAIL = "FETCH_POST_FAIL";
 
 const fetchPostStart = () => ({
   type: FETCH_POST_START,
@@ -19,17 +19,14 @@ const fetchPostFail = (error) => ({
 });
 
 
-export function fetchPosts(num) {
-  return function (dispatch) {
-    dispatch(fetchPostStart());
-    axios
-      .get(`https://reqres.in/api/users?page=${num}`)
-      .then((response) => {
-        const posts = response.data.data;
-        dispatch(fetchPostSuccess(posts));
+export const fetchPosts = (posts, page) => (dispatch) => {
+  dispatch(fetchPostStart())
+  axios
+    .get(`https://reqres.in/api/users?page=${page}`)
+    .then((response) => {
+          dispatch(fetchPostSuccess([...posts, ...response.data.data]))
       })
-      .catch((error) => {
-        dispatch(fetchPostFail(error.message));
-      });
-  };
-}
+    .catch(error => {
+      dispatch(fetchPostFail(error.message))
+    })
+};
